@@ -50,7 +50,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -.01
 .announce { overflow: hidden; background: var(--brand); color: var(--brand-ink); font-size: .8rem; font-weight: 600; }
 .announce__track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
 .announce span { padding: 7px 28px; white-space: nowrap; }
-.announce span::before { content: "★"; margin-right: 28px; opacity: .6; }
+.announce span::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 28px 2px 0; border-radius: 50%; background: currentColor; opacity: .6; vertical-align: middle; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- Botones ---------- */
@@ -181,7 +181,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -.01
 .perks { border-bottom: 1px solid var(--line); background: var(--surface); }
 .perks__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; padding-top: 14px; padding-bottom: 14px; }
 .perk { display: flex; align-items: center; gap: 10px; padding: 8px; }
-.perk > span { font-size: 1.4rem; }
+.perk__ic { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); }
 .perk strong { display: block; font-size: .85rem; }
 .perk small { color: var(--ink-2); font-size: .75rem; }
 
@@ -276,7 +276,7 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -.01
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 #ofTabs { margin-bottom: 18px; }
 .filters__row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.search { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); }
+.search { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; color: var(--ink-2); height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); }
 .search:focus-within { border-color: var(--brand); }
 .search input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: none; }
 .filters select { height: 46px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); min-width: 0; }

@@ -91,7 +91,7 @@ function pintarEncabezado() {
     </header>
     <div class="drawer drawer--left" id="drawerMenu" aria-hidden="true">
       <div class="drawer__panel" role="dialog" aria-label="Menú">
-        <div class="drawer__head"><strong>${esc(TIENDA.nombre)}</strong><button class="icon-btn" data-close aria-label="Cerrar menú">✕</button></div>
+        <div class="drawer__head"><strong>${esc(TIENDA.nombre)}</strong><button class="icon-btn" data-close aria-label="Cerrar menú"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
         <nav class="drawer__nav">${links}<a href="index.html#visitanos">Horario y ubicación</a></nav>
         <div class="drawer__cats"><p class="eyebrow">Juegos</p>${CATEGORIAS.map((c) => `<a href="productos.html?juego=${c.id}"><i style="background:${c.color}"></i>${esc(c.nombre)}</a>`).join("")}</div>
       </div>
@@ -186,7 +186,7 @@ const prod = (id) => PRODUCTOS.find((p) => p.id === id);
 document.body.insertAdjacentHTML("beforeend", `
   <div class="drawer drawer--right" id="drawerCart" aria-hidden="true">
     <div class="drawer__panel" role="dialog" aria-label="Carro de compras">
-      <div class="drawer__head"><strong>Tu carro</strong><button class="icon-btn" data-close aria-label="Cerrar carro">✕</button></div>
+      <div class="drawer__head"><strong>Tu carro</strong><button class="icon-btn" data-close aria-label="Cerrar carro"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="cart__ship" id="cartShip"></div>
       <div class="cart__items" id="cartItems"></div>
       <div class="cart__foot" id="cartFoot"></div>
@@ -214,7 +214,7 @@ function pintarCarro() {
 
   const meta = TIENDA.envioGratisDesde;
   $("#cartShip").innerHTML = meta && n ? (total >= meta
-    ? `<p>🎉 ¡Tienes <b>envío gratis</b>!</p><div class="bar"><i style="width:100%"></i></div>`
+    ? `<p>¡Tienes <b>envío gratis</b>!</p><div class="bar"><i style="width:100%"></i></div>`
     : `<p>Te faltan <b>${CLP(meta - total)}</b> para envío gratis</p><div class="bar"><i style="width:${(total / meta) * 100}%"></i></div>`) : "";
 
   $("#cartItems").innerHTML = n ? ids.map((id) => {
@@ -304,7 +304,7 @@ function abrirModal(id) {
   const p = prod(id); if (!p) return;
   const d = descuento(p);
   $("#modalBox").innerHTML = `
-    <button class="icon-btn modal__close" data-cerrar aria-label="Cerrar">✕</button>
+    <button class="icon-btn modal__close" data-cerrar aria-label="Cerrar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="modal__art">${arte(p)}</div>
     <div class="modal__info">
       <small class="card__game">${esc(cat(p.juego).nombre)} · ${esc(p.tipo)}</small>
