@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ofertas · Tu Tienda TCG</title>
+  <meta name="description" content="Ofertas en sobres, mazos, cajas y accesorios de cartas coleccionables por tiempo limitado.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tienda TCG · Demo Noirstweb">
+  <meta property="og:description" content="Maqueta de tienda online para cartas coleccionables: carro, ofertas, preventas y pedidos por WhatsApp.">
+  <meta property="og:image" content="https://noirstweb.github.io/Tienda-TCG-Demo/og-image.png">
+  <meta property="og:url" content="https://noirstweb.github.io/Tienda-TCG-Demo/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // Tema guardado (o el del sistema) antes de pintar, para evitar parpadeo
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("tcg_tema"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="ofertas">
+  <div id="encabezado"></div>
+
+  <main>
+    <section class="of-hero">
+      <div class="container of-hero__inner">
+        <div>
+          <p class="eyebrow eyebrow--light">Ofertas por tiempo limitado</p>
+          <h1>Hasta <span id="ofMax"></span> de descuento</h1>
+          <p><b id="ofCount"></b> productos rebajados en sellado y accesorios. Stock limitado.</p>
+        </div>
+        <div class="countdown" aria-label="Tiempo restante de las ofertas"><p>Terminan en</p><div class="cd" id="cd"></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><div><p class="eyebrow">Rebajas</p><h2>Todas las ofertas</h2></div></div>
+        <div class="chips" id="ofTabs" role="group" aria-label="Filtrar ofertas por juego"></div>
+        <div class="grid" id="ofGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container bundle">
+        <div>
+          <p class="eyebrow">Combo del mes</p>
+          <h2>Pack para empezar a jugar</h2>
+          <p>Mazo de inicio + fundas + deck box. Todo lo necesario para tu primer torneo.</p>
+        </div>
+        <div class="bundle__price"><s>$41.970</s><strong>$32.990</strong><a class="btn btn--brand" id="packBtn" target="_blank" rel="noopener">Pedir el pack por WhatsApp</a></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="pie"></div>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

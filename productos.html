@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Productos · Tu Tienda TCG</title>
+  <meta name="description" content="Catálogo de cartas coleccionables con filtros por juego, tipo y precio.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tienda TCG · Demo Noirstweb">
+  <meta property="og:description" content="Maqueta de tienda online para cartas coleccionables: carro, ofertas, preventas y pedidos por WhatsApp.">
+  <meta property="og:image" content="https://noirstweb.github.io/Tienda-TCG-Demo/og-image.png">
+  <meta property="og:url" content="https://noirstweb.github.io/Tienda-TCG-Demo/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // Tema guardado (o el del sistema) antes de pintar, para evitar parpadeo
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("tcg_tema"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="productos">
+  <div id="encabezado"></div>
+
+  <main class="section">
+    <div class="container">
+      <nav class="crumbs" aria-label="Ruta"><a href="index.html">Inicio</a> / <span>Productos</span></nav>
+      <div class="section__head section__head--tight"><h1 id="tituloLista">Todos los productos</h1><span class="muted" id="count"></span></div>
+
+      <div class="filters">
+        <div class="chips" id="fJuegos" role="group" aria-label="Filtrar por juego"></div>
+        <div class="filters__row">
+          <label class="search"><span aria-hidden="true">🔎</span><input type="search" id="fTexto" placeholder="Buscar producto…" aria-label="Buscar producto"></label>
+          <select id="fTipo" aria-label="Tipo de producto"></select>
+          <select id="fOrden" aria-label="Ordenar">
+            <option value="relevancia">Relevancia</option>
+            <option value="nuevo">Lo más nuevo</option>
+            <option value="menor">Precio: menor a mayor</option>
+            <option value="mayor">Precio: mayor a menor</option>
+            <option value="descuento">Mayor descuento</option>
+          </select>
+          <label class="check"><input type="checkbox" id="fStock"> Solo con stock</label>
+        </div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="vacio" hidden><p>No encontramos productos con esos filtros.</p><button class="btn btn--ghost" id="limpiar">Limpiar filtros</button></div>
+    </div>
+  </main>
+
+  <div id="pie"></div>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

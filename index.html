@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tu Tienda TCG · Cartas, sobres y accesorios</title>
+  <meta name="description" content="Tienda de cartas coleccionables: Pokémon, Magic, Yu-Gi-Oh!, One Piece y Mitos y Leyendas. Ofertas, preventas y retiro en tienda.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tienda TCG · Demo Noirstweb">
+  <meta property="og:description" content="Maqueta de tienda online para cartas coleccionables: carro, ofertas, preventas y pedidos por WhatsApp.">
+  <meta property="og:image" content="https://noirstweb.github.io/Tienda-TCG-Demo/og-image.png">
+  <meta property="og:url" content="https://noirstweb.github.io/Tienda-TCG-Demo/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // Tema guardado (o el del sistema) antes de pintar, para evitar parpadeo
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("tcg_tema"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="inicio">
+  <div id="encabezado"></div>
+
+  <main>
+    <!-- Banner principal (se edita en js/config.js → BANNERS) -->
+    <section class="promo" aria-roledescription="carrusel" aria-label="Promociones">
+      <div class="promo__track" id="promoTrack"></div>
+      <button class="promo__arrow promo__arrow--prev" id="promoPrev" aria-label="Anterior">‹</button>
+      <button class="promo__arrow promo__arrow--next" id="promoNext" aria-label="Siguiente">›</button>
+      <div class="promo__dots" id="promoDots"></div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="perks">
+      <div class="container perks__grid">
+        <div class="perk"><span>🚚</span><div><strong>Envíos a todo Chile</strong><small>Despacho en 24 a 72 horas</small></div></div>
+        <div class="perk"><span>🏪</span><div><strong>Retiro en tienda</strong><small>Gratis en <b id="heroCiudad"></b></small></div></div>
+        <div class="perk"><span>✅</span><div><strong>100% originales</strong><small>Producto sellado oficial</small></div></div>
+        <div class="perk"><span>💬</span><div><strong>Atención por WhatsApp</strong><small>Te respondemos rápido</small></div></div>
+      </div>
+    </section>
+
+    <!-- Categorías -->
+    <section class="section">
+      <div class="container">
+        <div class="section__head"><div><p class="eyebrow">Categorías</p><h2>Compra por juego</h2></div><a class="link" href="productos.html">Ver todo →</a></div>
+        <div class="cats" id="cats"></div>
+      </div>
+    </section>
+
+    <!-- Destacados -->
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section__head">
+          <div><p class="eyebrow">Selección</p><h2>Destacados de la semana</h2></div>
+          <div class="tabs" id="featTabs" role="tablist">
+            <button role="tab" data-tab="nuevo">Lo nuevo</button>
+            <button role="tab" data-tab="destacado">Más vendidos</button>
+            <button role="tab" data-tab="oferta">En oferta</button>
+          </div>
+        </div>
+        <div class="grid" id="featGrid"></div>
+      </div>
+    </section>
+
+    <!-- Preventas -->
+    <section class="section">
+      <div class="container">
+        <div class="pre">
+          <div class="pre__copy">
+            <p class="eyebrow eyebrow--light">Preventa</p>
+            <h2>Asegura lo próximo antes que nadie</h2>
+            <p>Reserva hoy y retira el día del lanzamiento. Cupos limitados por cliente.</p>
+            <a class="btn btn--light" href="productos.html?tipo=Preventa">Ver todas las preventas</a>
+          </div>
+          <div class="grid grid--2" id="preGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo comprar -->
+    <section class="section section--soft" id="como-comprar">
+      <div class="container">
+        <div class="section__head"><div><p class="eyebrow">Fácil y rápido</p><h2>Cómo comprar</h2></div></div>
+        <div class="steps">
+          <div class="step"><b>1</b><h3>Arma tu carro</h3><p>Agrega sobres, cajas o accesorios desde cualquier página.</p></div>
+          <div class="step"><b>2</b><h3>Envía tu pedido</h3><p>El carro arma el mensaje con tus productos y te lleva a WhatsApp.</p></div>
+          <div class="step"><b>3</b><h3>Paga y recibe</h3><p>Te confirmamos stock y coordinamos pago, retiro o envío.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visítanos -->
+    <section class="section" id="visitanos">
+      <div class="container visit">
+        <div>
+          <p class="eyebrow">Visítanos</p>
+          <h2>Ven a jugar a la tienda</h2>
+          <p class="visit__addr" id="direccion"></p>
+          <p class="visit__state" id="estadoGrande"></p>
+          <div class="visit__cta">
+            <a class="btn btn--brand" id="mapaLink" target="_blank" rel="noopener">Cómo llegar</a>
+            <a class="btn btn--ghost" href="ofertas.html">Ver ofertas</a>
+          </div>
+        </div>
+        <div class="hours-card"><h3>Horario de atención</h3><ul id="horario"></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="pie"></div>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
