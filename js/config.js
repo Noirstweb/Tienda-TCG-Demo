@@ -111,20 +111,20 @@ const CUPOS_BAJOS = 5; // desde aquí aparece "Últimos cupos"
 const LIGAS_CSV = "";
 const LIGAS = {
   "Pokémon TCG": [
-    ["Matías R.", 6, 4, 22], ["Camila S.", 6, 3, 19], ["Diego M.", 5, 3, 17], ["Benjamín T.", 6, 2, 15],
-    ["Javiera P.", 5, 2, 14], ["Tomás A.", 6, 1, 12], ["Ignacio V.", 4, 2, 11], ["Sebastián L.", 5, 1, 10],
-    ["Antonia F.", 4, 1, 8], ["Vicente C.", 3, 0, 5], ["Martina G.", 2, 0, 3],
+    ["Jugador 1", 6, 4, 22], ["Jugador 2", 6, 3, 19], ["Jugador 3", 5, 3, 17], ["Jugador 4", 6, 2, 15],
+    ["Jugador 5", 5, 2, 14], ["Jugador 6", 6, 1, 12], ["Jugador 7", 4, 2, 11], ["Jugador 8", 5, 1, 10],
+    ["Jugador 9", 4, 1, 8], ["Jugador 10", 3, 0, 5], ["Jugador 11", 2, 0, 3],
   ],
   "Yu-Gi-Oh!": [
-    ["Felipe G.", 3, 2, 12], ["Joaquín B.", 3, 2, 11], ["Valentina H.", 3, 1, 9], ["Cristóbal N.", 2, 1, 7],
-    ["Agustín E.", 3, 0, 6], ["Fernanda D.", 2, 1, 6], ["Lucas Q.", 2, 0, 4], ["Maximiliano Z.", 1, 0, 2],
+    ["Jugador 1", 3, 2, 12], ["Jugador 2", 3, 2, 11], ["Jugador 3", 3, 1, 9], ["Jugador 4", 2, 1, 7],
+    ["Jugador 5", 3, 0, 6], ["Jugador 6", 2, 1, 6], ["Jugador 7", 2, 0, 4], ["Jugador 8", 1, 0, 2],
   ],
 };
 const LIGAS_ACTUALIZADO = "Actualizado después de la última fecha";
 const CLASIFICAN = 8; // los primeros N juegan la final de liga
 
 const CAMPEONES = [
-  { nombre: "Matías R.", torneo: "Liga Pokémon TCG · Fecha 5", cuando: "Sábado pasado" },
-  { nombre: "Felipe G.", torneo: "Liga Yu-Gi-Oh! · Fecha 3", cuando: "Hace 2 semanas" },
-  { nombre: "Camila S.", torneo: "Torneo One Piece", cuando: "Hace 3 semanas" },
+  { nombre: "Jugador 1", torneo: "Liga Pokémon TCG · Fecha 5", cuando: "Sábado pasado" },
+  { nombre: "Jugador 1", torneo: "Liga Yu-Gi-Oh! · Fecha 3", cuando: "Hace 2 semanas" },
+  { nombre: "Jugador 2", torneo: "Torneo One Piece", cuando: "Hace 3 semanas" },
 ];
