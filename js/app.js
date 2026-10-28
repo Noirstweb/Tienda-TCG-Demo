@@ -69,13 +69,13 @@ const ICON = {
   luna: '<svg class="ic-luna" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3Z"/></svg>',
 };
-const NAV = [["index.html", "Inicio", "inicio"], ["productos.html", "Productos", "productos"], ["ofertas.html", "Ofertas", "ofertas"]];
+const NAV = [["index.html", "Inicio", "inicio"], ["productos.html", "Productos", "productos"], ["ofertas.html", "Ofertas", "ofertas"], ["torneos.html", "Torneos", "torneos"]];
 
 function pintarEncabezado() {
   const avisos = TIENDA.avisos.map((a) => `<span>${esc(a)}</span>`).join("");
   const links = NAV.map(([href, txt, id]) => `<a href="${href}" ${pagina === id ? 'aria-current="page"' : ""}>${txt}${id === "ofertas" ? ' <b class="nav__tag">%</b>' : ""}</a>`).join("");
   $("#encabezado").innerHTML = `
-    <div class="demo-bar">Maqueta de demostración · Noirstweb · Productos y precios de ejemplo</div>
+    <div class="demo-bar">Maqueta de demostración creada por <a class="nw-link" href="https://noirstweb.com" target="_blank" rel="noopener">Noirstweb</a> · Productos y precios de ejemplo</div>
     <div class="announce"><div class="announce__track">${avisos}${avisos.replace(/<span>/g, '<span aria-hidden="true">')}</div></div>
     <header class="header">
       <div class="container header__inner">
@@ -109,11 +109,11 @@ function pintarPie() {
           <p class="footer__muted">${esc(TIENDA.direccion)}, ${esc(TIENDA.ciudad)}</p>
         </div>
         <div><h3>Juegos</h3><ul>${CATEGORIAS.map((c) => `<li><a href="productos.html?juego=${c.id}">${esc(c.nombre)}</a></li>`).join("")}</ul></div>
-        <div><h3>Tienda</h3><ul><li><a href="productos.html">Todos los productos</a></li><li><a href="ofertas.html">Ofertas</a></li><li><a href="productos.html?tipo=Preventa">Preventas</a></li><li><a href="index.html#como-comprar">Cómo comprar</a></li></ul></div>
+        <div><h3>Tienda</h3><ul><li><a href="productos.html">Todos los productos</a></li><li><a href="ofertas.html">Ofertas</a></li><li><a href="productos.html?tipo=Preventa">Preventas</a></li><li><a href="torneos.html">Torneos y liga</a></li><li><a href="index.html#como-comprar">Cómo comprar</a></li></ul></div>
         <div><h3>Horario</h3><ul class="footer__hours">${horas}</ul>
           <p class="footer__social"><a href="https://instagram.com/${esc(TIENDA.instagram)}" target="_blank" rel="noopener">Instagram</a> · <a href="${waLink("Hola, tengo una consulta.")}" target="_blank" rel="noopener">WhatsApp</a></p></div>
       </div>
-      <div class="container footer__bottom"><span>© ${new Date().getFullYear()} ${esc(TIENDA.nombre)}</span><span>Sitio de demostración creado por Noirstweb</span></div>
+      <div class="container footer__bottom"><span>© ${new Date().getFullYear()} ${esc(TIENDA.nombre)}</span><span>Sitio de demostración creado por <a class="nw-link" href="https://noirstweb.com" target="_blank" rel="noopener">Noirstweb</a></span></div>
     </footer>
     <a class="wa-float" href="${waLink("Hola, tengo una consulta.")}" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">${ICON.wa}</a>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>`;
@@ -464,4 +464,149 @@ if (pagina === "ofertas") {
   }
   tic(); setInterval(tic, 1000);
   $("#packBtn").href = waLink(`Hola ${TIENDA.nombre}, quiero el Pack para empezar a jugar (mazo + fundas + deck box).`);
+}
+
+/* ---------- Torneos y liga ---------- */
+if (pagina === "torneos") {
+  const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  // Fecha real de cada torneo a partir de hoy
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  TORNEOS.forEach((t) => {
+    const d = new Date(hoy);
+    d.setDate(d.getDate() + ((t.dia - d.getDay() + 7) % 7) + t.semana * 7);
+    const [h, m] = t.hora.split(":").map(Number);
+    d.setHours(h, m, 0, 0);
+    if (d < new Date()) d.setDate(d.getDate() + 7);
+    t.fecha = d;
+  });
+  TORNEOS.sort((a, b) => a.fecha - b.fecha);
+  const libres = (t) => Math.max(0, t.cupos - t.inscritos);
+  const fechaLarga = (d) => `${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`;
+
+  // Próximo torneo con cuenta regresiva
+  const prox = TORNEOS.find((t) => libres(t) > 0) || TORNEOS[0];
+  $("#proxNombre").textContent = prox.nombre;
+  $("#proxMeta").textContent = `${fechaLarga(prox.fecha)} · ${prox.hora} hrs · Inscripción ${CLP(prox.valor)}`;
+  $("#proxCupos").textContent = `${prox.inscritos}/${prox.cupos} inscritos`;
+  $("#proxBar").style.width = `${Math.round((prox.inscritos / prox.cupos) * 100)}%`;
+  $("#proxBtn").dataset.inscribir = prox.id;
+  const pad = (n) => String(n).padStart(2, "0");
+  function tic() {
+    let s = Math.max(0, Math.floor((prox.fecha - Date.now()) / 1000));
+    const d = Math.floor(s / 86400); s %= 86400;
+    const h = Math.floor(s / 3600); s %= 3600;
+    const m = Math.floor(s / 60); s %= 60;
+    $("#proxCd").innerHTML = [[d, "días"], [h, "horas"], [m, "min"], [s, "seg"]].map(([v, l]) => `<div><b>${pad(v)}</b><small>${l}</small></div>`).join("");
+  }
+  tic(); setInterval(tic, 1000);
+
+  // Calendario con filtro por juego
+  const juegos = [...new Set(TORNEOS.map((t) => t.juego))];
+  let filtro = "todos";
+  $("#tJuegos").innerHTML = [`<button class="chip" data-tj="todos" aria-pressed="true">Todos</button>`, ...juegos.map((j) => `<button class="chip" data-tj="${j}" style="--c:${cat(j).color}"><i></i>${esc(cat(j).nombre)}</button>`)].join("");
+  function pintarTorneos() {
+    $("#tLista").innerHTML = TORNEOS.filter((t) => filtro === "todos" || t.juego === filtro).map((t) => {
+      const l = libres(t), lleno = l === 0, pct = Math.round((t.inscritos / t.cupos) * 100);
+      const estado = lleno ? '<span class="stock stock--out">Completo · lista de espera</span>'
+        : l <= CUPOS_BAJOS ? `<span class="stock stock--low">${l === 1 ? "Queda 1 cupo" : `Quedan ${l} cupos`}</span>`
+        : `<span class="stock">${l} cupos disponibles</span>`;
+      return `<article class="tor ${t.destacado ? "tor--dest" : ""}" style="--c:${cat(t.juego).color}">
+        <div class="tor__date"><small>${DIAS[t.fecha.getDay()].slice(0, 3)}</small><b>${t.fecha.getDate()}</b><small>${MESES[t.fecha.getMonth()]}</small></div>
+        <div class="tor__body">
+          <div class="tor__tags"><span class="tor__game">${esc(cat(t.juego).nombre)}</span><span class="tor__fmt">${esc(t.formato)}</span>${t.destacado ? '<span class="badge badge--new">Clasificatorio</span>' : ""}</div>
+          <h3>${esc(t.nombre)}</h3>
+          <p>${t.hora} hrs · Inscripción ${CLP(t.valor)}</p>
+          <p class="tor__prize">${esc(t.premio)}</p>
+          <div class="bar ${lleno ? "bar--full" : l <= CUPOS_BAJOS ? "bar--low" : ""}"><i style="width:${pct}%"></i></div>
+          <div class="tor__foot">${estado}<small>${t.inscritos}/${t.cupos} inscritos</small></div>
+          <button class="btn ${lleno ? "btn--ghost" : "btn--brand"}" data-inscribir="${t.id}">${lleno ? "Anotarme en lista de espera" : "Inscribirme"}</button>
+        </div>
+      </article>`;
+    }).join("");
+  }
+  $("#tJuegos").onclick = (e) => {
+    const b = e.target.closest("[data-tj]"); if (!b) return;
+    filtro = b.dataset.tj;
+    $$("#tJuegos .chip").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    pintarTorneos();
+  };
+  pintarTorneos();
+
+  // Inscripción (formulario que arma el mensaje de WhatsApp)
+  let actual = null;
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-inscribir]"); if (!b) return;
+    actual = TORNEOS.find((t) => t.id === b.dataset.inscribir); if (!actual) return;
+    $("#insTitulo").textContent = actual.nombre;
+    $("#insMeta").textContent = `${fechaLarga(actual.fecha)} · ${actual.hora} hrs · ${CLP(actual.valor)}`;
+    $("#insEspera").hidden = libres(actual) > 0;
+    $("#insError").textContent = "";
+    $("#insModal").classList.add("is-open");
+    $("#insModal").setAttribute("aria-hidden", "false");
+    $("#insNombre").focus();
+  });
+  const cerrarIns = () => { $("#insModal").classList.remove("is-open"); $("#insModal").setAttribute("aria-hidden", "true"); };
+  $("#insModal").addEventListener("click", (e) => { if (e.target.id === "insModal" || e.target.closest("[data-cerrar-ins]")) cerrarIns(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarIns(); });
+  $("#insForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nombre = $("#insNombre").value.trim(), rut = $("#insId").value.trim(), mazo = $("#insMazo").value.trim();
+    if (!nombre) { $("#insError").textContent = "Escribe tu nombre para reservar el cupo."; $("#insNombre").focus(); return; }
+    const espera = libres(actual) === 0;
+    const txt = [
+      `Hola ${TIENDA.nombre}, quiero ${espera ? "quedar en lista de espera para" : "inscribirme en"}: ${actual.nombre}`,
+      `${fechaLarga(actual.fecha)} · ${actual.hora} hrs · ${CLP(actual.valor)}`,
+      `Nombre: ${nombre}`, rut ? `ID de jugador: ${rut}` : "", mazo ? `Mazo: ${mazo}` : "",
+    ].filter(Boolean).join("\n");
+    window.open(waLink(txt), "_blank", "noopener");
+    cerrarIns();
+    toast(espera ? "Te llevamos a WhatsApp para la lista de espera" : "Te llevamos a WhatsApp para confirmar tu cupo");
+  });
+
+  // Tabla de la liga (datos locales o de una hoja de Google publicada como CSV)
+  let ligas = LIGAS, ligaActual = Object.keys(LIGAS)[0];
+  const normTxt = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  function pintarTabs() {
+    $("#ligaTabs").innerHTML = Object.keys(ligas).map((n) => `<button role="tab" data-liga="${esc(n)}" aria-selected="${n === ligaActual}">${esc(n)}</button>`).join("");
+  }
+  function pintarTabla() {
+    const q = normTxt($("#ligaBuscar").value.trim());
+    const filas = [...(ligas[ligaActual] || [])].sort((a, b) => b[3] - a[3] || b[2] - a[2]);
+    $("#ligaBody").innerHTML = filas.map(([n, f, v, p], i) => {
+      const pos = i + 1;
+      return `<tr class="${q && normTxt(n).includes(q) ? "is-hit" : ""} ${pos === CLASIFICAN ? "is-cut" : ""}">
+        <td><span class="pos ${pos <= 3 ? "pos--" + pos : ""}">${pos}</span></td>
+        <td class="liga__name">${esc(n)}</td><td class="hide-sm">${f}</td><td class="hide-sm">${v}</td><td class="liga__pts">${p}</td></tr>`;
+    }).join("");
+    const msg = $("#ligaMsg");
+    if (!q) { msg.textContent = ""; return; }
+    const i = filas.findIndex(([n]) => normTxt(n).includes(q));
+    if (i < 0) { msg.textContent = `No encontramos "${$("#ligaBuscar").value.trim()}" en la liga ${ligaActual}.`; return; }
+    const [n, , , p] = filas[i];
+    const corte = filas[CLASIFICAN - 1];
+    msg.textContent = `${n} va en el puesto ${i + 1} con ${p} pts.` + (i + 1 <= CLASIFICAN ? " ¡Está clasificando a la final!" : corte ? ` Le faltan ${corte[3] - p + 1} pts para entrar al Top ${CLASIFICAN}.` : "");
+  }
+  $("#ligaTabs").onclick = (e) => {
+    const b = e.target.closest("[data-liga]"); if (!b) return;
+    ligaActual = b.dataset.liga; pintarTabs(); pintarTabla();
+  };
+  $("#ligaBuscar").oninput = pintarTabla;
+  $("#ligaAct").textContent = LIGAS_ACTUALIZADO;
+  $("#ligaCorte").textContent = `Los ${CLASIFICAN} mejores de la temporada juegan la final de liga.`;
+  pintarTabs(); pintarTabla();
+
+  if (LIGAS_CSV) {
+    fetch(LIGAS_CSV).then((r) => r.text()).then((csv) => {
+      const nuevas = {};
+      csv.trim().split(/\r?\n/).slice(1).forEach((linea) => {
+        const [liga, nombre, f, v, p] = linea.split(",").map((x) => x.replace(/^"|"$/g, "").trim());
+        if (!liga || !nombre) return;
+        (nuevas[liga] = nuevas[liga] || []).push([nombre, +f || 0, +v || 0, +p || 0]);
+      });
+      if (Object.keys(nuevas).length) { ligas = nuevas; ligaActual = Object.keys(nuevas)[0]; pintarTabs(); pintarTabla(); }
+    }).catch(() => {});
+  }
+
+  // Últimos campeones
+  $("#campeones").innerHTML = CAMPEONES.map((c) => `<li><span class="trophy" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span><div><strong>${esc(c.nombre)}</strong><small>${esc(c.torneo)} · ${esc(c.cuando)}</small></div></li>`).join("");
 }

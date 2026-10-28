@@ -85,3 +85,46 @@ const DESCRIPCIONES = {
   Accesorio: "Protege y transporta tus cartas como un profesional.",
   Preventa: "Reserva hoy y retira el día del lanzamiento. Cupos limitados.",
 };
+
+/* =========================================================
+   TORNEOS
+   Las fechas se calculan desde hoy para que la maqueta siempre muestre torneos próximos.
+   dia: 0 domingo … 6 sábado · semana: 0 = esta semana, 1 = la próxima… · cupos / inscritos
+   ========================================================= */
+const TORNEOS = [
+  { id: "t1", nombre: "Liga Pokémon TCG · Fecha 6", juego: "pokemon", formato: "Estándar", dia: 6, semana: 0, hora: "16:00", valor: 4000, cupos: 32, inscritos: 22, premio: "Sobres según asistencia + puntos de liga" },
+  { id: "t2", nombre: "Commander casual", juego: "magic", formato: "Commander", dia: 5, semana: 0, hora: "19:00", valor: 3000, cupos: 16, inscritos: 16, premio: "Sobre para cada mesa ganadora" },
+  { id: "t3", nombre: "Liga Yu-Gi-Oh! · Fecha 4", juego: "yugioh", formato: "Avanzado", dia: 5, semana: 1, hora: "18:30", valor: 4000, cupos: 24, inscritos: 11, premio: "Sobres para el Top 4 + puntos de liga" },
+  { id: "t4", nombre: "Torneo One Piece", juego: "onepiece", formato: "Estándar", dia: 0, semana: 1, hora: "15:00", valor: 5000, cupos: 24, inscritos: 20, premio: "Premios para el Top 8" },
+  { id: "t5", nombre: "Mitos y Leyendas Primer Bloque", juego: "mitos", formato: "Primer Bloque", dia: 6, semana: 1, hora: "15:30", valor: 4000, cupos: 32, inscritos: 9, premio: "Sobres según asistencia" },
+  { id: "t6", nombre: "Clasificatorio regional Pokémon TCG", juego: "pokemon", formato: "Estándar", dia: 6, semana: 2, hora: "11:00", valor: 10000, cupos: 48, inscritos: 30, premio: "Cupos al Nacional + trofeo", destacado: true },
+];
+const CUPOS_BAJOS = 5; // desde aquí aparece "Últimos cupos"
+
+/* =========================================================
+   LIGAS: tabla de posiciones por juego
+   Cada fila: [nombre, fechas jugadas, victorias, puntos]. El orden se calcula solo.
+   Opcional: pega aquí el link CSV de una hoja de Google publicada
+   (Archivo → Compartir → Publicar en la web → CSV) con columnas:
+   liga, nombre, fechas, victorias, puntos. Así la tienda actualiza la tabla sin tocar código.
+   ========================================================= */
+const LIGAS_CSV = "";
+const LIGAS = {
+  "Pokémon TCG": [
+    ["Matías R.", 6, 4, 22], ["Camila S.", 6, 3, 19], ["Diego M.", 5, 3, 17], ["Benjamín T.", 6, 2, 15],
+    ["Javiera P.", 5, 2, 14], ["Tomás A.", 6, 1, 12], ["Ignacio V.", 4, 2, 11], ["Sebastián L.", 5, 1, 10],
+    ["Antonia F.", 4, 1, 8], ["Vicente C.", 3, 0, 5], ["Martina G.", 2, 0, 3],
+  ],
+  "Yu-Gi-Oh!": [
+    ["Felipe G.", 3, 2, 12], ["Joaquín B.", 3, 2, 11], ["Valentina H.", 3, 1, 9], ["Cristóbal N.", 2, 1, 7],
+    ["Agustín E.", 3, 0, 6], ["Fernanda D.", 2, 1, 6], ["Lucas Q.", 2, 0, 4], ["Maximiliano Z.", 1, 0, 2],
+  ],
+};
+const LIGAS_ACTUALIZADO = "Actualizado después de la última fecha";
+const CLASIFICAN = 8; // los primeros N juegan la final de liga
+
+const CAMPEONES = [
+  { nombre: "Matías R.", torneo: "Liga Pokémon TCG · Fecha 5", cuando: "Sábado pasado" },
+  { nombre: "Felipe G.", torneo: "Liga Yu-Gi-Oh! · Fecha 3", cuando: "Hace 2 semanas" },
+  { nombre: "Camila S.", torneo: "Torneo One Piece", cuando: "Hace 3 semanas" },
+];

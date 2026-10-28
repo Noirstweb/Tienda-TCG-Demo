@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Torneos · Tu Tienda TCG</title>
+  <meta name="description" content="Calendario de torneos, inscripción en línea y tabla de posiciones de la liga de la tienda.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tienda TCG · Demo Noirstweb">
+  <meta property="og:description" content="Maqueta de tienda online para cartas coleccionables: carro, ofertas, preventas y pedidos por WhatsApp.">
+  <meta property="og:image" content="https://noirstweb.github.io/Tienda-TCG-Demo/og-image.png">
+  <meta property="og:url" content="https://noirstweb.github.io/Tienda-TCG-Demo/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // Tema guardado (o el del sistema) antes de pintar, para evitar parpadeo
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("tcg_tema"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="torneos">
+  <div id="encabezado"></div>
+
+  <main>
+    <!-- Próximo torneo -->
+    <section class="tor-hero">
+      <div class="container tor-hero__inner">
+        <div>
+          <p class="eyebrow eyebrow--light">Torneos y liga</p>
+          <h1>Juega, suma puntos y llega a la final</h1>
+          <p>Torneos todas las semanas, liga con tabla de posiciones e inscripción en línea.</p>
+          <div class="tor-hero__cta"><a class="btn btn--light" href="#calendario">Ver calendario</a><a class="btn btn--outline-light" href="#liga">Tabla de la liga</a></div>
+        </div>
+        <div class="next">
+          <p class="next__label">Próximo torneo</p>
+          <h2 id="proxNombre"></h2>
+          <p class="next__meta" id="proxMeta"></p>
+          <div class="cd" id="proxCd" aria-label="Tiempo para el próximo torneo"></div>
+          <div class="bar"><i id="proxBar"></i></div>
+          <div class="next__foot"><small id="proxCupos"></small><button class="btn btn--light" id="proxBtn">Inscribirme</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendario -->
+    <section class="section" id="calendario">
+      <div class="container">
+        <div class="section__head"><div><p class="eyebrow">Calendario</p><h2>Próximos torneos</h2></div></div>
+        <div class="chips" id="tJuegos" role="group" aria-label="Filtrar torneos por juego"></div>
+        <div class="tor-list" id="tLista"></div>
+      </div>
+    </section>
+
+    <!-- Liga -->
+    <section class="section section--soft" id="liga">
+      <div class="container liga">
+        <div class="liga__main">
+          <div class="section__head">
+            <div><p class="eyebrow">Temporada actual</p><h2>Tabla de la liga</h2><p class="muted" id="ligaAct"></p></div>
+            <div class="tabs" id="ligaTabs" role="tablist" aria-label="Liga"></div>
+          </div>
+          <label class="search liga__search"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" id="ligaBuscar" placeholder="Busca tu nombre en la tabla" aria-label="Buscar jugador" autocomplete="off"></label>
+          <p class="liga__msg" id="ligaMsg" role="status"></p>
+          <div class="table-wrap">
+            <table class="liga__table">
+              <thead><tr><th>#</th><th>Jugador</th><th class="hide-sm">Fechas</th><th class="hide-sm">Victorias</th><th class="liga__pts">Puntos</th></tr></thead>
+              <tbody id="ligaBody"></tbody>
+            </table>
+          </div>
+          <p class="muted liga__corte" id="ligaCorte"></p>
+        </div>
+        <aside class="champs">
+          <h3>Últimos campeones</h3>
+          <ul id="campeones"></ul>
+          <div class="champs__rules">
+            <h3>Cómo se suman puntos</h3>
+            <ul>
+              <li><span>Victoria</span><b>3 pts</b></li>
+              <li><span>Empate</span><b>1 pt</b></li>
+              <li><span>Asistencia a la fecha</span><b>1 pt</b></li>
+              <li><span>Top 1 de la fecha</span><b>+2 pts</b></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Inscripción -->
+  <div class="modal" id="insModal" aria-hidden="true">
+    <div class="modal__box modal__box--form" role="dialog" aria-modal="true" aria-labelledby="insTitulo">
+      <button class="icon-btn modal__close" data-cerrar-ins aria-label="Cerrar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <form class="ins" id="insForm" novalidate>
+        <p class="eyebrow">Inscripción</p>
+        <h2 id="insTitulo"></h2>
+        <p class="muted" id="insMeta"></p>
+        <p class="ins__wait" id="insEspera" hidden>Este torneo está completo. Te anotamos en la lista de espera y te avisamos si se libera un cupo.</p>
+        <label>Nombre y apellido<input id="insNombre" autocomplete="name" required></label>
+        <label>ID de jugador <small>(opcional)</small><input id="insId" autocomplete="off"></label>
+        <label>Mazo que vas a jugar <small>(opcional)</small><input id="insMazo" autocomplete="off"></label>
+        <p class="ins__error" id="insError" role="alert"></p>
+        <button class="btn btn--wa btn--block" type="submit">Enviar inscripción por WhatsApp</button>
+        <p class="cart__note">El pago de la inscripción se coordina por WhatsApp o en la tienda.</p>
+      </form>
+    </div>
+  </div>
+
+  <div id="pie"></div>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
